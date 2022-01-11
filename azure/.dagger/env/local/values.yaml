@@ -1,0 +1,28 @@
+plan:
+    package: ./plan
+name: local
+inputs:
+    run.rg.rgLocation:
+        text: northeurope
+    run.rg.rgName:
+        text: "yes"
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1cpp5s5qgptp7c3q5xeakahpzkhjap298ye5u0msxf8dnnsrq2czsc3f2c2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBzaHBzL255dmtsNFZtMHRo
+            RjlWTDhSZWhIM0JqM1RMU2phb3REN2NPV0VBCkcrTXFNcWtoOFlLR2hRZDlRelVv
+            ZnRlZjl0bmEvSDNDK25jR2VuWTA1Q2cKLS0tIEtKbGZBWVVWUm51WnFKcDhXWW9x
+            L1FEZDVURnB1SWtZTWpodXNxTkdFcjAK2R9fzlamthU8QQNRQvJnEpGHBjssNwWx
+            B1qpRrDS/XwzSxRlAgXohryhdFX78ok6BKkLjhQ0YQJwJNVdy2OqVQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-01-11T17:08:47Z"
+    mac: ENC[AES256_GCM,data:hEB/Q2DJx6z+tryEeBtC6dXM3NIoiYm5iNjtbL7ATHDmg9EC3yuPKpnwlJWkZJKJsYsT/kE6vVqVBjYb9WPv1Bs8+vf1v2GKU+9zllmbOj5xyiMOgrTfdaRTCOqKzOGTjhs2lR/K7WVx1XLhub36FbCvYSA1MdjkVHkXKkjf3fA=,iv:X8fHRpkxJVi/s6O0rS2db/QBSMsmd7KDfa3XZWKh48Q=,tag:ZQ7H1rWUkKCiJtD9avtJfg==,type:str]
+    pgp: []
+    encrypted_suffix: secret
+    version: 3.7.1
