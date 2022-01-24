@@ -1,15 +1,14 @@
-package gcp_serverless
+package configServerless
 
 import (
-	"alpha.dagger.io/dagger"
 	"alpha.dagger.io/gcp"
 	"alpha.dagger.io/gcp/gcr"
 )
 
 #Config: {
-	gcpConfig: gcp, #Config
+	configGcp: gcp.#Config
 
 	credentials: gcr.#Credentials & {
-		config: gcpConfig
+		config: configGcp
 	}
 }
