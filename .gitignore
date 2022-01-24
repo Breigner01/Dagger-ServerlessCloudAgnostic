@@ -1,0 +1,15 @@
+# Editor files and folders
+
+.idea/
+.vscode/
+
+# Cue
+
+**/values.yaml
+cue.mod
+!cue.mod/pkg/github.com/gcpServerless
+.dagger
+
+# Secrets
+
+secrets/
