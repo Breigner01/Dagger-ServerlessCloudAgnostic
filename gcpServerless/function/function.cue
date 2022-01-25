@@ -14,7 +14,7 @@ import (
 
 	runtime: string
 
-	path: dagger.#Input & {*"src" | string}
+    source: dagger.#Input & {*"src" | dagger.#Artifact}
 
 	#up: [
 		op.#Load & {
@@ -24,13 +24,13 @@ import (
 		},
 		op.#Exec & {
 			always: true
-			mount: "src": from: path
+			mount: "/src": from: source
 			env: {
 				NAME:    name
 				RUNTIME: runtime
 			}
 			args: ["/bin/bash", "-c", #"""
-				gcloud functions deploy ${NAME} --runtime ${RUNTIME} --source src/ --trigger-http --allow-unauthenticated
+				gcloud functions deploy ${NAME} --runtime ${RUNTIME} --source /src --trigger-http --allow-unauthenticated
 				"""#]
 		},
 	]
