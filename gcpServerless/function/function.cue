@@ -14,7 +14,8 @@ import (
 
 	runtime: string
 
-    source: dagger.#Input & {*"src" | dagger.#Artifact}
+	// Directory containing the files for the cloud functions
+	source: dagger.#Input & {dagger.#Artifact}
 
 	#up: [
 		op.#Load & {
@@ -22,6 +23,14 @@ import (
 				"config": config.configGcp
 			}
 		},
+
+		op.#Exec & {
+			always: true
+			args: ["/bin/bash", "-c", #"""
+				gcloud auth list
+			"""#]
+		},
+
 		op.#Exec & {
 			always: true
 			mount: "/src": from: source
@@ -31,7 +40,7 @@ import (
 			}
 			args: ["/bin/bash", "-c", #"""
 				gcloud functions deploy ${NAME} --runtime ${RUNTIME} --source /src --trigger-http --allow-unauthenticated
-				"""#]
+			"""#]
 		},
 	]
 }
