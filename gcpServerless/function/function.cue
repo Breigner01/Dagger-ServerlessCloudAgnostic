@@ -27,8 +27,8 @@ import (
 		op.#Exec & {
 			always: true
 			args: ["/bin/bash", "-c", #"""
-				gcloud auth list
-			"""#]
+					gcloud auth list
+				"""#]
 		},
 
 		op.#Exec & {
@@ -39,8 +39,8 @@ import (
 				RUNTIME: runtime
 			}
 			args: ["/bin/bash", "-c", #"""
-				gcloud functions deploy ${NAME} --runtime ${RUNTIME} --source /src --trigger-http --allow-unauthenticated
-			"""#]
+					gcloud functions deploy ${NAME} --runtime ${RUNTIME} --source /src --trigger-http --allow-unauthenticated
+				"""#]
 		},
 	]
 }
