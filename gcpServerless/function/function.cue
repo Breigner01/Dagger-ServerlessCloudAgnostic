@@ -26,13 +26,6 @@ import (
 
 		op.#Exec & {
 			always: true
-			args: ["/bin/bash", "-c", #"""
-					gcloud auth list
-				"""#]
-		},
-
-		op.#Exec & {
-			always: true
 			mount: "/src": from: source
 			env: {
 				NAME:    name
