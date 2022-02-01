@@ -1,4 +1,4 @@
-package gcp_serverless
+package gcpServerless
 
 import (
 	"alpha.dagger.io/dagger"
