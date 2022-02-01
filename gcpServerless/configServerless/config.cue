@@ -6,9 +6,9 @@ import (
 )
 
 #Config: {
-	configGcp: gcp.#Config
+	gcpConfig: gcp.#Config
 
 	credentials: gcr.#Credentials & {
-		config: configGcp
+		config: gcpConfig
 	}
 }

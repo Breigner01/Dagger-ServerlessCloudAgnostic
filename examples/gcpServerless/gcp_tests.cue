@@ -1,4 +1,4 @@
-package gcp_tests
+package test
 
 import (
 	"alpha.dagger.io/gcp"
@@ -9,7 +9,7 @@ import (
 gcpConfig: gcp.#Config
 
 config: configServerless.#Config & {
-	configGcp: gcpConfig
+	"gcpConfig": gcpConfig
 }
 
 HelloWorld: function.#Function & {
