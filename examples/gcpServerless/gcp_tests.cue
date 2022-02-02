@@ -14,8 +14,6 @@ config: configServerless.#Config & {
 
 HelloWorld: function.#Function & {
 	"config": config
-
-	name: "HelloWorld"
-
-	runtime: "go116"
+	name:     "HelloWorld"
+	runtime:  "go116"
 }

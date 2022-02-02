@@ -14,15 +14,16 @@ import (
 
 #Function: {
 
-	config:  configServerless.#Config
-	name:    string
+	// The Config from gcpServerless/configServerless.#Config
+	config: configServerless.#Config
+	// The name of the function on gcp, the function developed and the file
+	name: string
+	// The runtime used for the function
 	runtime: #Runtime
 
 	// Directory containing the files for the cloud functions
-	source: dagger.#Input & {dagger.#Artifact}
-
+	source:    dagger.#Input & {dagger.#Artifact}
 	container: os.#Container & {
-
 		image: gcp.#GCloud & {
 			"config": config.gcpConfig
 		}
