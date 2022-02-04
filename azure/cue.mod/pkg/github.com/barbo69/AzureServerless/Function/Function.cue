@@ -7,6 +7,9 @@ import (
 )
 
 #function: {
+    // Azure Config
+	config: Login.#Config
+
     // Function name
     name: string & dagger.#Input
 
@@ -26,7 +29,9 @@ import (
     source: dagger.#Artifact @dagger(input)
 
     ctr: os.#Container & {
-        image: Login.#CLI
+        image: Login.#CLI & {
+			"config": config
+		}
 
         always: true
 

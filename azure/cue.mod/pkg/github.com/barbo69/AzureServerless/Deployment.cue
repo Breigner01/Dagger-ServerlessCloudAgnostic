@@ -1,22 +1,29 @@
 package AzureServerless
 
 import (
+    "github.com/barbo69/AzureServerless/Login"
     "github.com/barbo69/AzureServerless/RessourceGroup"
     "github.com/barbo69/AzureServerless/Storage"
     "github.com/barbo69/AzureServerless/Function"
 )
 
 #deploy: {
-    ressourceGroup: RessourceGroup.#ResourceGroup
+    config: Login.#Config
+
+    ressourceGroup: RessourceGroup.#ResourceGroup & {
+        "config": config
+    }
 
     storage: Storage.#StorageAccount & {
+        "config": config
         "ressourceGroup": name: ressourceGroup.name
-        location: ressourceGroup.location
+        "location": ressourceGroup.location
     }
 
     function: Function.#function & {
-        location: ressourceGroup.location
+        "config": config
+        "location": ressourceGroup.location
         "ressourceGroup": name: ressourceGroup.name
-        storage: name: storage.name
+        "storage": name: storage.name
     }
 }

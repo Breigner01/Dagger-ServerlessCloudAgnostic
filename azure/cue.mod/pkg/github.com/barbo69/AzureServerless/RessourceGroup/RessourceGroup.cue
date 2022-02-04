@@ -8,6 +8,8 @@ import (
 
 // Create a resource group
 #ResourceGroup: {
+	// Azure Config
+	config: Login.#Config
 
 	// ResourceGroup name
 	name: string & dagger.#Input
@@ -20,7 +22,9 @@ import (
 
 	// Container image
 	ctr: os.#Container & {
-		image: Login.#CLI 
+		image: Login.#CLI & {
+			"config": config
+		}
 
 		always: true
 
