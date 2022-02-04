@@ -1,40 +1,40 @@
-package storage
+package Storage
 
 import (
-    "github.com/barbo69/azureserverless/login"
-    "alpha.dagger.io/os"
 	"alpha.dagger.io/dagger"
+	"alpha.dagger.io/os"
+    "github.com/barbo69/AzureServerless/Login"
 )
 
 // Create a storage account
 #StorageAccount: {
 
 	// ResourceGroup name
-	rgName: string & dagger.#Input
+	ressourceGroup: name: string & dagger.#Input
 
 	// StorageAccount location
-	stLocation: string & dagger.#Input
+	location: string & dagger.#Input
 
 	// StorageAccount name
-	stName: string & dagger.#Input
+	name: string & dagger.#Input
 
 	// StorageAccount Id
 	id: string & dagger.#Output
 
 	// Container image
 	ctr: os.#Container & {
-		image: login.#CLI
+		image: Login.#CLI
 		always: true
 
 		command: """
 			az storage account create -n "$AZURE_STORAGE_ACCOUNT" -g "$AZURE_DEFAULTS_GROUP" -l "$AZURE_DEFAULTS_LOCATION"
-			az storage account show -n "$AZURE_STORAGE_ACCOUNT" -g "$AZURE_DEFAULTS_GROUP" --query "id" -o json | jq -r . | tr -d "\n" > /storageAccountId
+			az storage account show -n "$AZURE_STORAGE_ACCOUNT" -g "$AZURE_DEFAULTS_GROUP" --query "id" -o jressourceGroupson | jq -r . | tr -d "\n" > /storageAccountId
 			"""
 
 		env: {
-			AZURE_DEFAULTS_GROUP:    rgName
-			AZURE_DEFAULTS_LOCATION: stLocation
-			AZURE_STORAGE_ACCOUNT:   stName
+			AZURE_DEFAULTS_GROUP:    ressourceGroup.name
+			AZURE_DEFAULTS_LOCATION: location
+			AZURE_STORAGE_ACCOUNT:   name
 		}
 	}
 

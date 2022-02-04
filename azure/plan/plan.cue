@@ -1,7 +1,7 @@
 package plan
 
 import (
-  "github.com/barbo69/azureserverless"
+  "github.com/barbo69/AzureServerless"
 )
 
-run: azureserverless.#deploy
+run: AzureServerless.#deploy

@@ -1,25 +1,26 @@
-package ressourcegroup
+package RessourceGroup
 
 import (
-	"github.com/barbo69/azureserverless/login"
+	"github.com/barbo69/AzureServerless/Login"
 	"alpha.dagger.io/os"
 	"alpha.dagger.io/dagger"
 )
 
 // Create a resource group
 #ResourceGroup: {
+
 	// ResourceGroup name
-	rgName: string & dagger.#Input
+	name: string & dagger.#Input
 
 	// ResourceGroup location
-	rgLocation: string & dagger.#Input
+	location: string & dagger.#Input
 
 	// ResourceGroup Id
 	id: string & dagger.#Output
 
 	// Container image
 	ctr: os.#Container & {
-		image: login.#CLI 
+		image: Login.#CLI 
 
 		always: true
 
@@ -29,8 +30,8 @@ import (
 			"""
 
 		env: {
-			AZURE_DEFAULTS_GROUP:    rgName
-			AZURE_DEFAULTS_LOCATION: rgLocation
+			AZURE_DEFAULTS_GROUP:    name
+			AZURE_DEFAULTS_LOCATION: location
 		}
 	}
 

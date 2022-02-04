@@ -1,23 +1,23 @@
-package function
+package Function
 
 import (
-	"github.com/barbo69/azureserverless/login"
+	"github.com/barbo69/AzureServerless/Login"
 	"alpha.dagger.io/os"
 	"alpha.dagger.io/dagger"
 )
 
 #function: {
     // Function name
-    funcName: string & dagger.#Input
+    name: string & dagger.#Input
 
     // Function location
-    funcLocation: string & dagger.#Input 
+    location: string & dagger.#Input 
 
     // ResourceGroup name
-    rgName: string & dagger.#Input
+    ressourceGroup: name: string & dagger.#Input
 
     // Storage name
-    stName: string & dagger.#Input
+    storage: name: string & dagger.#Input
 
     // Function Id
 	id: string & dagger.#Output
@@ -26,7 +26,7 @@ import (
     source: dagger.#Artifact @dagger(input)
 
     ctr: os.#Container & {
-        image: login.#CLI
+        image: Login.#CLI
 
         always: true
 
@@ -39,10 +39,10 @@ import (
         """
         
         env: {
-            AZURE_DEFAULTS_GROUP:    rgName
-            AZURE_DEFAULTS_STORAGE:  stName
-            AZURE_DEFAULTS_LOCATION: funcLocation
-            AZURE_DEFAULTS_FUNCTION: funcName
+            AZURE_DEFAULTS_GROUP:    ressourceGroup.name
+            AZURE_DEFAULTS_STORAGE:  storage.name
+            AZURE_DEFAULTS_LOCATION: location
+            AZURE_DEFAULTS_FUNCTION: name
         }
     }
 

@@ -1,5 +1,5 @@
 // Azure base package
-package login
+package Login
 
 import (
 	"alpha.dagger.io/docker"
