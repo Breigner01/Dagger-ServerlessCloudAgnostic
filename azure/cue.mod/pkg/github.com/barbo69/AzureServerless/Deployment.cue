@@ -5,7 +5,7 @@ import (
     "github.com/barbo69/AzureServerless/Login"
     "github.com/barbo69/AzureServerless/RessourceGroup"
     "github.com/barbo69/AzureServerless/Storage"
-    "github.com/barbo69/AzureServerless/Function"
+    "github.com/barbo69/AzureServerless/FunctionApp"
 )
 
 #config : {
@@ -29,21 +29,21 @@ import (
 
     config: #config
 
-    ressourceGroup: RessourceGroup.#ResourceGroup & {
+    ressourceGroup: RessourceGroup.#ResourceGroup.#Create & {
         "name": config.ressourceGroup.name
         "location": config.location
         "config": config.login
     }
 
     if ressourceGroup.id != _|_ {
-        storage: Storage.#StorageAccount & {
+        storage: Storage.#Storage.#Account.#Create & {
             "config": config.login
             "ressourceGroup": name: ressourceGroup.name
             "location": ressourceGroup.location
             "name": config.storage.name
         }
         if storage.id != _|_ {
-            function: Function.#function & {
+            function: FunctionApp.#functionApp.#Create & {
                 "config": config.login
                 "location": ressourceGroup.location
                 "ressourceGroup": name: ressourceGroup.name

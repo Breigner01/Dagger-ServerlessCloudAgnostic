@@ -1,4 +1,4 @@
-package Function
+package Create
 
 import (
 	"alpha.dagger.io/dagger"
@@ -6,7 +6,7 @@ import (
     "github.com/barbo69/AzureServerless/Login"
 )
 
-#function: {
+#Create: {
     // Azure Config
 	config: Login.#Config
 
