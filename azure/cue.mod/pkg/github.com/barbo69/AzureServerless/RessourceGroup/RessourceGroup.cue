@@ -1,9 +1,9 @@
 package RessourceGroup
 
 import (
-	"github.com/barbo69/AzureServerless/Login"
-	"alpha.dagger.io/os"
 	"alpha.dagger.io/dagger"
+	"alpha.dagger.io/os"
+	"github.com/barbo69/AzureServerless/Login"
 )
 
 // Create a resource group
@@ -24,6 +24,7 @@ import (
 	ctr: os.#Container & {
 		image: Login.#CLI & {
 			"config": config
+			"version": "latest"
 		}
 
 		always: true

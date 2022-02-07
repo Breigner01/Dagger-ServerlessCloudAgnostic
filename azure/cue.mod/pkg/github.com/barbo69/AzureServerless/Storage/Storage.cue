@@ -27,6 +27,7 @@ import (
 	ctr: os.#Container & {
 		image: Login.#CLI & {
 			"config": config
+			"version": "latest"
 		}
 		always: true
 

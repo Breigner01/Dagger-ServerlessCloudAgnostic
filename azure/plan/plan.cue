@@ -4,4 +4,8 @@ import (
   "github.com/barbo69/AzureServerless"
 )
 
-run: AzureServerless.#deploy
+config: AzureServerless.#config
+
+run: AzureServerless.#deploy & {
+    "config": config 
+}
