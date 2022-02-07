@@ -2,26 +2,23 @@ package AzureServerless
 
 import (
     "alpha.dagger.io/dagger"
-    "github.com/barbo69/AzureServerless/Login"
-    "github.com/barbo69/AzureServerless/RessourceGroup"
-    "github.com/barbo69/AzureServerless/Storage"
-    "github.com/barbo69/AzureServerless/FunctionApp"
+    "github.com/barbo69/AzureServerless/Azure"
 )
 
 #config : {
-    login: Login.#Config
+    "login": Azure.#azure.#login.#Config
 
     // Azure server location
-    location: string & dagger.#Input
+    "location": string & dagger.#Input
 
     // Azure ressource group name
-    ressourceGroup: name: string & dagger.#Input
+    "resourceGroup": "name": string & dagger.#Input
 
     // Azure storage name
-    storage: name: string & dagger.#Input
+    "storage": "name": string & dagger.#Input
 
     // Azure function name
-    function: name: string & dagger.#Input
+    "function": "name": string & dagger.#Input
 
 }
 
@@ -29,24 +26,24 @@ import (
 
     config: #config
 
-    ressourceGroup: RessourceGroup.#ResourceGroup.#Create & {
-        "name": config.ressourceGroup.name
+    resourceGroup: Azure.#azure.#resourceGroup.#create & {
+        "name": config.resourceGroup.name
         "location": config.location
         "config": config.login
     }
 
-    if ressourceGroup.id != _|_ {
-        storage: Storage.#Storage.#Account.#Create & {
+    if resourceGroup.id != _|_ {
+        storage: Azure.#azure.#storage.#account.#create & {
             "config": config.login
-            "ressourceGroup": name: ressourceGroup.name
-            "location": ressourceGroup.location
+            "resourceGroup": name: resourceGroup.name
+            "location": resourceGroup.location
             "name": config.storage.name
         }
         if storage.id != _|_ {
-            function: FunctionApp.#functionApp.#Create & {
+            function: Azure.#azure.#functionApp.#create & {
                 "config": config.login
-                "location": ressourceGroup.location
-                "ressourceGroup": name: ressourceGroup.name
+                "location": resourceGroup.location
+                "resourceGroup": name: resourceGroup.name
                 "storage": name: storage.name
                 "name": config.function.name
             }   

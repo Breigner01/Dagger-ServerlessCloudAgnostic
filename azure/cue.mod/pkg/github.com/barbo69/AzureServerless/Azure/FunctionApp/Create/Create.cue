@@ -3,10 +3,10 @@ package Create
 import (
 	"alpha.dagger.io/dagger"
     "alpha.dagger.io/os"
-    "github.com/barbo69/AzureServerless/Login"
+    "github.com/barbo69/AzureServerless/Azure/Login"
 )
 
-#Create: {
+#create: {
     // Azure Config
 	config: Login.#Config
 
@@ -17,7 +17,7 @@ import (
     location: string & dagger.#Input 
 
     // ResourceGroup name
-    ressourceGroup: name: string & dagger.#Input
+    resourceGroup: name: string & dagger.#Input
 
     // Storage name
     storage: name: string & dagger.#Input
@@ -39,7 +39,7 @@ import (
         """
         
         env: {
-            AZURE_DEFAULTS_GROUP:    ressourceGroup.name
+            AZURE_DEFAULTS_GROUP:    resourceGroup.name
             AZURE_DEFAULTS_STORAGE:  storage.name
             AZURE_DEFAULTS_LOCATION: location
             AZURE_DEFAULTS_FUNCTION: name
