@@ -22,6 +22,8 @@ import (
     // Storage name
     storage: name: string & dagger.#Input
 
+    // Function Id
+	id: string & dagger.#Output
 
     ctr: os.#Container & {
         image: Login.#CLI & {
@@ -33,6 +35,7 @@ import (
 
         command: """
             az functionapp create --resource-group "$AZURE_DEFAULTS_GROUP" --consumption-plan-location "$AZURE_DEFAULTS_LOCATION" --runtime node --runtime-version 12 --functions-version 3 --name "$AZURE_DEFAULTS_FUNCTION" --storage-account "$AZURE_DEFAULTS_STORAGE"
+            az functionapp show -n "$AZURE_DEFAULTS_FUNCTION" --query "id" -o json | jq -r . | tr -d "\n" > /functionId
         """
         
         env: {
@@ -42,4 +45,11 @@ import (
             AZURE_DEFAULTS_FUNCTION: name
         }
     }
+
+    id: ({
+		os.#File & {
+			from: ctr
+			path: "/functionId"
+		}
+	}).contents
 }
