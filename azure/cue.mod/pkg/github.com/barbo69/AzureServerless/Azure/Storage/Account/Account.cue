@@ -4,8 +4,8 @@ import (
     "github.com/barbo69/AzureServerless/Azure/Storage/Account/Create"
 )
 
-#account: {
+#Account: {
 
 	// Create a storage account
-	#create: Create.#create
+	#Create: Create.#Create
 }

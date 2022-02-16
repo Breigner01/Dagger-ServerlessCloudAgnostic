@@ -7,7 +7,7 @@ import (
     "github.com/barbo69/AzureServerless/Azure/Login"
 )
 
-#create: {
+#Create: {
     // Azure Config
 	config: Login.#Config
 

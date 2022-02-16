@@ -5,8 +5,8 @@ import (
 )
 
 // Create a resource group
-#resourceGroup: {
+#ResourceGroup: {
 
-	#create: Create.#create
+	#Create: Create.#Create
 
 }

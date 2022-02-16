@@ -8,7 +8,7 @@ import (
 )
 
 // Create a resource group
-#create: {
+#Create: {
 	// Azure Config
 	config: Login.#Config
 
@@ -52,7 +52,6 @@ import (
 		}
 	}
 
-	// Resource Id
 	id: ({
 		os.#File & {
 			from: ctr

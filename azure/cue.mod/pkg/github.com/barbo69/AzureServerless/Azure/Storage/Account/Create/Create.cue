@@ -8,7 +8,7 @@ import (
 )
 
 // Create a storage account
-#create: {
+#Create: {
 	// Azure Config
 	config: Login.#Config
 

@@ -4,8 +4,8 @@ import (
     "github.com/barbo69/AzureServerless/Azure/Storage/Account"
 )
 
-#storage: {
+#Storage: {
 
 	// Manage Storage Account command
-	#account: Account.#account
+	#Account: Account.#Account
 }
