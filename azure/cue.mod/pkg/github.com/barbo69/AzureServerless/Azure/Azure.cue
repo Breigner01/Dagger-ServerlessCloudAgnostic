@@ -7,14 +7,13 @@ import (
     "github.com/barbo69/AzureServerless/Azure/FunctionApp"
 )
 
-#azure: {
+#Azure: {
 
-    #login: Login
+    #Login: Login
 
-    #resourceGroup: ResourceGroup.#resourceGroup
+    #ResourceGroup: ResourceGroup.#ResourceGroup
 
-    #storage: Storage.#storage
+    #Storage: Storage.#Storage
 
-    #functionApp: FunctionApp.#functionApp
-
+    #FunctionApp: FunctionApp.#FunctionApp
 }

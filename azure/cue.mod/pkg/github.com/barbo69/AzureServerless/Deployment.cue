@@ -6,8 +6,8 @@ import (
     "github.com/barbo69/AzureServerless/AzureFuncCoreTool"
 )
 
-#config : {
-    "login": Azure.#azure.#login.#Config
+#Config : {
+    "login": Azure.#Azure.#Login.#Config
 
     // Azure version
     "version": string
@@ -32,11 +32,11 @@ import (
 
 }
 
-#deploy: {
+#Deploy: {
 
-    config: #config
+    config: #Config
 
-    resourceGroup: Azure.#azure.#resourceGroup.#create & {
+    resourceGroup: Azure.#Azure.#ResourceGroup.#Create & {
         "version": config.version
         "name": config.resourceGroup.name
         "location": config.location
@@ -44,7 +44,7 @@ import (
     }
 
     if resourceGroup.id != _|_ {
-        storage: Azure.#azure.#storage.#account.#create & {
+        storage: Azure.#Azure.#Storage.#Account.#Create & {
             "version": config.version
             "config": config.login
             "resourceGroup": name: resourceGroup.name
@@ -52,7 +52,7 @@ import (
             "name": config.storage.name
         }
         if storage.id != _|_ {
-            function: Azure.#azure.#functionApp.#create & {
+            function: Azure.#Azure.#FunctionApp.#Create & {
                 "version": config.version
                 "config": config.login
                 "location": resourceGroup.location
@@ -62,7 +62,7 @@ import (
                 "args": config.function.args
             }
             if function.id != _|_ {
-                funcCoreTool: AzureFuncCoreTool.#azureFuncCoreTool & {
+                funcCoreTool: AzureFuncCoreTool.#AzureFuncCoreTool & {
                     "version": config.version
                     "config": config.login
                     "name": config.function.name
