@@ -7,7 +7,7 @@ import (
     "github.com/barbo69/AzureServerless/Azure/Login"
 )
 
-#azureFuncCoreTool: {
+#AzureFuncCoreTool: {
 
     // Azure Config
 	config: Login.#Config
