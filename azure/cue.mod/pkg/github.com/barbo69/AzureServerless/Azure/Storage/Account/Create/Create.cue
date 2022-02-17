@@ -57,7 +57,6 @@ import (
 		}
 	}
 
-	// StorageAccount Id
 	id: ({
 		os.#File & {
 			from: ctr
