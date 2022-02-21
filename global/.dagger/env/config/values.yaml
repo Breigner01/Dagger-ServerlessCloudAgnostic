@@ -1,0 +1,21 @@
+name: config
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1tc2489vg7lm0uf7gs7pqglktl4hz4suzpl9d7hx8z8gm9ztrhvmsrkr3sz
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBMb0hSVFFmZGtzR1JUamdj
+            c2Vaa3FpeGUrSGFJRkZPSjBnRWVnZksyaXlzCndUR3JXMkxvdXFYY1E4RGJOOG5x
+            WWswTFdZM0hPOFpIU2duaVR4bDNzTlUKLS0tIGJwbDJ0dUFFS0RGSkhxYUl4eE5R
+            cVFET1JTRXpmbE9NdFpURzkyWll6ZEkKhm/IuXOThsNzaNA4mvflYcU9n2S5IeNO
+            zb47S4GXFnLpe9sfmkjGBXeAqV9DPAZ5o2p5zEhUE8QCR7JG90TZTA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-02-01T10:24:10Z"
+    mac: ENC[AES256_GCM,data:Ih4ZpTOlMjGGd4aGYdcpD58JDX4FwKySIhvUrKPqW59RIbfpW8/7om0NjOthOdfesaZRAp+EGqmyCEyK1YWAbJLQMIgvymOBv1HpDNhCJzL9yYA40o3yJRerMzneb+HPSx+0teFCM0AdL7mezYY80ptiHT2R7E9dcHP1GjNAahU=,iv:n95KYuN4Gp8XDHERC03OrPLMlgR/S0mCVkUhkCIQT9o=,tag:u+nXIAAcLdPKK57V4Z5qqw==,type:str]
+    pgp: []
+    encrypted_suffix: secret
+    version: 3.7.1
