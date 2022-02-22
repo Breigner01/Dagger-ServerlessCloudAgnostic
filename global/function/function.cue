@@ -1,11 +1,10 @@
 package function
 
 import (
+    "github.com/global/config"
     gcpConfig "github.com/gcpServerless/configServerless"
-    "github.com/azure/Login"
-	"github.com/global/config"
 	gcpFunction "github.com/gcpServerless/function"
-	azureFunction "github.com/azure/FunctionApp/Create"
+	azureServerless "github.com/AzureServerless/"
 )
 
 #Function: {
@@ -30,8 +29,8 @@ import (
     }
 
     if (configFunction.provider & "azure") != _|_ {
-        function: azureFunction.#create & {
-            
+        function: azureServerless.#Deploy & {
+            "config": config
         }
     }
 }
