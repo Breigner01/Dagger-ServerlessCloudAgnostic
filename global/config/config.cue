@@ -2,17 +2,24 @@ package config
 
 import (
 	"github.com/gcpServerless/configServerless"
-	"github.com/azure/Login"
+	"github.com/github.com/AzureServerless/"
 )
 
 #Config: {
 	// The config coming from one of the serverless package
-	config: configServerless.#Config | Login.#CLI
+	config: configServerless.#Config | AzureServerless.#Config
 
 	provider: "gcp" | "azure"
 
-	// This one is necessary only in case azure is used so it's created only in this case
+	// Need to be improve
 	if (provider & "azure") != _|_ {
-		azureConfig: Login.#Config
+		config.#Config {
+			"function": "args": [
+				"--runtime", "node",
+				"--runtime-version", "14",
+				"--functions-version", "4"
+				]
+    		"version": "3.0"
+		}
 	}
 }
