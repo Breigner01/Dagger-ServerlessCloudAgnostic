@@ -1,11 +1,19 @@
 package globalTest
 
 import (
-    "github.com/global/config"
     "github.com/AzureServerless"
+    "github.com/global/config"
+    "github.com/global/function"
 )
 
-config.#Config & {
-    config: AzureServerless.#Config
+configAzure: config.#Config & {
+    azureConfig: AzureServerless.#Config
     provider: "azure"
+}
+
+functionAzure: function.#Function & {
+    configFunction: configAzure
+    runtime: "node"
+    runtimeVersion: "14"
+    name: "test"
 }

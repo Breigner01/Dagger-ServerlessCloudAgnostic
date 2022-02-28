@@ -27,12 +27,12 @@ import (
     // Azure function name
     "function": "args": [...string] | *[""]
 
-    // Source directory
-    "source": dagger.#Artifact & dagger.#Input
-
 }
 
 #Deploy: {
+
+    // Source directory
+    source: dagger.#Artifact & dagger.#Input
 
     config: #Config
 
@@ -66,7 +66,7 @@ import (
                     "version": config.version
                     "config": config.login
                     "name": config.function.name
-                    "source": config.source
+                    "source": source
                 }
             }
         }
