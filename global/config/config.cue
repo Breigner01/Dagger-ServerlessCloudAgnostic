@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/gcpServerless/configServerless"
-	"github.com/github.com/AzureServerless/"
+	"github.com/AzureServerless"
 )
 
 #Config: {
@@ -11,15 +11,15 @@ import (
 
 	provider: "gcp" | "azure"
 
-	// Need to be improve
-	if (provider & "azure") != _|_ {
-		config.#Config {
-			"function": "args": [
-				"--runtime", "node",
-				"--runtime-version", "14",
-				"--functions-version", "4"
-				]
-    		"version": "3.0"
-		}
-	}
+	// // Need to be improve
+	// if (provider & "azure") != _|_ {
+	// 	AzureServerless.#Config {
+	// 		"function": "args": [
+	// 			"--runtime", "node",
+	// 			"--runtime-version", "14",
+	// 			"--functions-version", "4"
+	// 			]
+    // 		"version": "3.0"
+	// 	}
+	// }
 }
