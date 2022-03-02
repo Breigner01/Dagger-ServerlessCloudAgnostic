@@ -2,6 +2,7 @@ package globalTest
 
 import (
     "github.com/AzureServerless"
+    "github.com/gcpServerless/configServerless"
     "github.com/global/config"
     "github.com/global/function"
 )
@@ -16,4 +17,17 @@ functionAzure: function.#Function & {
     runtime: "node"
     runtimeVersion: "14"
     name: "test"
+}
+
+
+gcpConfig: config.#Config & {
+    "gcpConfig": configServerless.#Config
+    provider: "gcp"
+}
+
+gcpFunction: function.#Function & {
+    configFunction: gcpConfig
+    runtime: "go"
+    runtimeVersion: "116"
+    name: "HelloWorld"
 }
