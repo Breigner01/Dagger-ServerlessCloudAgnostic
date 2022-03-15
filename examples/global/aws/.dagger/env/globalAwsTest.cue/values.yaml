@@ -1,0 +1,21 @@
+name: globalAwsTest.cue
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age153h92zaqj7wvmk33xw2atem0xuqphgmcr3v87xhlpc0ve7c26d5qh03jcs
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBna2JkZVFyNmxqQ1BHam0r
+            NXhSVDlhUGRJL3hEWFFxRWFncklNcGRwRVE4CnJpTHlLamFJaU5CdDFwd0hscGh6
+            cW12cDBPb29wN2wxNjVvZWJHSjVrWE0KLS0tIDRPQzVja3NweDcrUm5qNVgyeGVq
+            b1Axb3hFUlZpT1FiR2dNUThrT1VtRG8K5MgzWA7l32TmIR7KOjbEsBcTzOB/0e5u
+            999QMWka+1nGXT+FefVk7FM8WXEfXKKILzrZ7EiyTD6s8D5uw2C9FA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-08T18:05:56Z"
+    mac: ENC[AES256_GCM,data:IOhr5pW4+HIGagi9nVjTrSMg/44EeP53Z4zedtmuAjg9Zk6IJWsNfpN8xs07Opr5Fg6DSQHn6d3FOs55ja8MRYbg1gaA0DbDczIHqNgnZjZYbeHRM/rePUJ+D2s6WKGWQktcRkAfd1arvhSw13BtuKn1PIXjX43JhtyLCs3S1TU=,iv:2mJPEJxQqyDJq5JHtxwdS1p5XNQJuF43JfaN3OzG65s=,tag:2Yted9f2D5iLOXZSj2831g==,type:str]
+    pgp: []
+    encrypted_suffix: secret
+    version: 3.7.1
