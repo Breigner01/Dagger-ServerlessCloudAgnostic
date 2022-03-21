@@ -1,4 +1,12 @@
 name: globalAwsTest.cue
+inputs:
+    awsConfig.awsConfig.accessKey:
+        secret: ENC[AES256_GCM,data:vkasMOSTHRRyPSDSk/LC5hqStwE=,iv:3QrNcLzx1mS7caPFnI0/04bWUHWSGP22MglprYHS9J8=,tag:5qLu65qD1vCZCsM6pG8lPA==,type:str]
+    awsConfig.awsConfig.secretKey:
+        secret: ENC[AES256_GCM,data:SKrUvWHU6TjQb4v+cIi9GByTsibzwGjW6WrPLO3KwlYWM8MQHYg+VA==,iv:M5CsiqrkM6VYXkw9isDx/FZSgA+mkSX0XKyfbMA16mc=,tag:z8EG90cvv2PeladsLg4Z2g==,type:str]
+    awsFunction.source:
+        dir:
+            path: ./src
 sops:
     kms: []
     gcp_kms: []
@@ -14,8 +22,8 @@ sops:
             b1Axb3hFUlZpT1FiR2dNUThrT1VtRG8K5MgzWA7l32TmIR7KOjbEsBcTzOB/0e5u
             999QMWka+1nGXT+FefVk7FM8WXEfXKKILzrZ7EiyTD6s8D5uw2C9FA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-03-08T18:05:56Z"
-    mac: ENC[AES256_GCM,data:IOhr5pW4+HIGagi9nVjTrSMg/44EeP53Z4zedtmuAjg9Zk6IJWsNfpN8xs07Opr5Fg6DSQHn6d3FOs55ja8MRYbg1gaA0DbDczIHqNgnZjZYbeHRM/rePUJ+D2s6WKGWQktcRkAfd1arvhSw13BtuKn1PIXjX43JhtyLCs3S1TU=,iv:2mJPEJxQqyDJq5JHtxwdS1p5XNQJuF43JfaN3OzG65s=,tag:2Yted9f2D5iLOXZSj2831g==,type:str]
+    lastmodified: "2022-03-15T19:04:51Z"
+    mac: ENC[AES256_GCM,data:0V94c1CSzPw0E2CJBNht2I/UqAeHhgr1cgIKn1ANZO5zsLYT1mr5S2XZB3xiVnyKxrvA5yYYjHtqmNRBuw1ie/YcSPEcckmnfH8eE/xMIvAgV9NNSfv0p1O1SECUu1yB8mKcwU2wjZPw2Yc4LWY1Ifokcah6RqNxW9a8MGXr+0U=,iv:146JRavKumKnd/BtbTQOd0HAECXdES3mfS+L5jzDdGs=,tag:uETaLcyd4ji82sPYE65NSw==,type:str]
     pgp: []
     encrypted_suffix: secret
     version: 3.7.1

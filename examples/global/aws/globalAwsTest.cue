@@ -1,6 +1,8 @@
 package globalAwsTest
 
 import (
+    "encoding/json"
+    "alpha.dagger.io/dagger"
     "alpha.dagger.io/aws"
     "github.com/global/config"
     "github.com/global/function"
@@ -16,5 +18,7 @@ awsFunction: function.#Function & {
     configFunction: awsConfig
     runtime: "go"
     runtimeVersion: "1.x"
-    name: "helloWorld"
+    name: "HelloWorld"
 }
+
+output: dagger.#Output & {json.Marshal(awsFunction.function.#manifest)}
