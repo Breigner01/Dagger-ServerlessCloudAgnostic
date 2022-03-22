@@ -11,18 +11,17 @@ import (
 
 #Config: {
 	subscriptionId: dagger.#Secret
+	version: *#DefaultVersion | string
 }
 
 #Image: {
-
-	version: *#DefaultVersion | string
 
 	config: #Config
 		
 	docker.#Build & {
 		steps: [
 			docker.#Pull & {
-				source: "barbo69/dagger-azure-cli:\(version)"
+				source: "barbo69/dagger-azure-cli:\(config.version)"
 			},	
 			docker.#Run & {
 				command: {

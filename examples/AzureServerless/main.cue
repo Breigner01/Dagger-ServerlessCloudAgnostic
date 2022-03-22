@@ -5,6 +5,7 @@ import (
 	"github.com/AzureServerless/Azure/Login"
 	"github.com/AzureServerless/Azure/RessourceGroup"
 	"github.com/AzureServerless/Azure/Storage/Account"
+	"github.com/AzureServerless/Azure/FunctionApp"
 )
 
 dagger.#Plan & {
@@ -16,7 +17,6 @@ dagger.#Plan & {
 			config: Login.#Config & {
 				subscriptionId: client.env.AZ_SUB_ID_TOKEN
 			}
-			version: "3.0"
 			name: "test1212121"
 			location: "northeurope"
 		}
@@ -25,9 +25,18 @@ dagger.#Plan & {
 				subscriptionId: client.env.AZ_SUB_ID_TOKEN
 			}
 			resourceGroup: name: "test1212121"
-			version: "3.0"
 			name: "ajajkaj"
 			location: "northeurope"
+		}
+		"CreateFunctionApp": FunctionApp.#Create & {
+			config: Login.#Config & {
+				subscriptionId: client.env.AZ_SUB_ID_TOKEN
+			}
+			resourceGroup: name: "test1212121"
+			storage: name: "ajajkaj" 
+			name: "ajajkaj"
+			location: "northeurope"
+			version: "3"
 		}
 	} 	
 }

@@ -1,71 +1,50 @@
-package Create
+package FunctionApp
 
 import (
-    "strings"
-	"alpha.dagger.io/dagger"
-    "alpha.dagger.io/os"
-    "github.com/AzureServerless/Azure/Login"
+    "universe.dagger.io/docker"
+	"github.com/AzureServerless/Azure/Login"
 )
 
 #Create: {
     // Azure Config
 	config: Login.#Config
 
-    // Azure version
+    // Azure FonctionApp version
 	version: string
 
     // Function name
-    name: string & dagger.#Input
+    name: string
 
     // Function location
-    location: string & dagger.#Input 
+    location: string 
 
     // ResourceGroup name
-    resourceGroup: name: string & dagger.#Input
+    resourceGroup: name: string
 
     // Storage name
-    storage: name: string & dagger.#Input
-
-    // Function Id
-	id: string & dagger.#Output
+    storage: name: string
 
     // Additional arguments
-    args: [...string] | *[""]
+    args: [...string] | *[]
 
+    _image: Login.#Image & {
+		"config": config
+	}
 
-    ctr: os.#Container & {
-        image: Login.#CLI & {
-			"config": config
-            "version": version
+    docker.#Run & {
+		"input": _image.output
+		"command": {
+			"name": "az"
+			"flags": {
+				"functionapp": true
+				"create": true
+				"--resource-group": resourceGroup.name
+				"--consumption-plan-location": location
+                "--name": name
+                "--storage-account": storage.name
+                "--functions-version": version
+			}
+			"args": args
 		}
-
-        always: true
-
-        command: #"""
-            az functionapp create \
-            --resource-group "$AZURE_DEFAULTS_GROUP" \
-            --consumption-plan-location "$AZURE_DEFAULTS_LOCATION" \
-            --name "$AZURE_DEFAULTS_FUNCTION" \
-            --storage-account "$AZURE_DEFAULTS_STORAGE" \
-            $ARGS
-            az functionapp \
-            show -n "$AZURE_DEFAULTS_FUNCTION" \
-            --query "id" -o json | jq -r . | tr -d "\n" > /functionId
-        """#
-        
-        env: {
-            AZURE_DEFAULTS_GROUP:    resourceGroup.name
-            AZURE_DEFAULTS_STORAGE:  storage.name
-            AZURE_DEFAULTS_LOCATION: location
-            AZURE_DEFAULTS_FUNCTION: name
-            ARGS: strings.Join(args, " ")
-        }
-    }
-
-    id: ({
-		os.#File & {
-			from: ctr
-			path: "/functionId"
-		}
-	}).contents
+	}
 }

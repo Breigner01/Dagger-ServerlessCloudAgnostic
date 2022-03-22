@@ -10,9 +10,6 @@ import (
 	// Azure Config
 	config: Login.#Config
 
-	// Azure Config
-	version: string
-
 	// ResourceGroup name
 	resourceGroup: name: string
 
@@ -27,7 +24,6 @@ import (
 
 	_image: Login.#Image & {
 		"config": config
-		"version": version
 	}
 	
 	docker.#Run & {
