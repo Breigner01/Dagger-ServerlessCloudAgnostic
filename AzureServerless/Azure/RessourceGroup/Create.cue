@@ -31,7 +31,8 @@ import (
 		"command": {
 			"name": "az"
 			"flags": {
-				"group": "create"
+				"group": true
+				"create": true
 				"-l": location
 				"-n": name
 			}
