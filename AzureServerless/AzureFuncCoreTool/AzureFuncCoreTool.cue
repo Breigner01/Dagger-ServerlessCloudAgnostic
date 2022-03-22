@@ -1,49 +1,46 @@
 package AzureFuncCoreTool
 
 import (
-	"strings"	
-    "alpha.dagger.io/dagger"
-	"alpha.dagger.io/os"
-    "github.com/AzureServerless/Azure/Login"
+	"dagger.io/dagger"
+	"universe.dagger.io/docker"
+	"github.com/AzureServerless/Azure/Login"
 )
 
-#AzureFuncCoreTool: {
+#Publish: {
 
     // Azure Config
 	config: Login.#Config
 
-	// Azure Config
-	version: string
-
     // Function name
-	name: string & dagger.#Input 
+	name: string
 
     // Source directory
-    source: dagger.#Artifact @dagger(Input)
+    source: dagger.#FS
 
 	// Additional arguments
-    args: [...string] | *[""]
+    args: [...string] | *[]
 
-	ctr: os.#Container & {
-		image: Login.#CLI & {
-			"config": config
-			"version": version
+	_image: Login.#Image & {
+		"config": config
+	}
+
+	docker.#Run & {
+		"input": _image.output
+		"workdir": "/src"
+		"command": {
+			"name": "func"
+			"flags": {
+				"azure": true
+				"functionapp": true
+				"publish": name
+			}
+			"args": args
 		}
-
-		mount: "/src": from: source
-
-		dir: "/src"
-
-		always: true
-
-		command: #"""
-			func azure functionapp publish "$AZURE_DEFAULTS_FUNCTION"\
-			$ARGS
-			"""#
-
-		env: {
-			AZURE_DEFAULTS_FUNCTION: name
-			ARGS: strings.Join(args, " ")
+		mounts: {
+			"source": {
+				dest:     "/src"
+				contents: source
+			}
 		}
 	}	
 }
