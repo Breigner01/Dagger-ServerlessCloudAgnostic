@@ -2,42 +2,42 @@
 package Login
 
 import (
-	"alpha.dagger.io/dagger"
-	"alpha.dagger.io/docker"
-	"alpha.dagger.io/os"
+	"dagger.io/dagger"
+	"universe.dagger.io/docker"
 )
 
 // Default Azure CLI version
-let defaultVersion = "3.0"
+#DefaultVersion: "3.0"
 
 #Config: {
-	// AZURE subscription id
-	subscriptionId: dagger.#Secret & dagger.#Input
+	subscriptionId: dagger.#Secret
 }
 
-// Azure Cli to be used by all Azure packages
-#CLI: {
-	// Azure Config
+#Image: {
+
+	version: *#DefaultVersion | string
+
 	config: #Config
-
-	// Azure CLI version to install
-	version: string | *defaultVersion
-
-	// Container image
-	os.#Container & {
-		image: docker.#Pull & {
-			from: "barbo69/dagger-azure-cli:\(version)"
-		}
-
-		always: true
-
-		command: """
-			az login
-			az account set -s "$(cat /run/secrets/subscriptionId)"
-			"""
 		
-		secret: {
-			"/run/secrets/subscriptionId": config.subscriptionId
-		}
+	docker.#Build & {
+		steps: [
+			docker.#Pull & {
+				source: "barbo69/dagger-azure-cli:\(version)"
+			},	
+			docker.#Run & {
+				command: {
+					name: "az"
+					args: ["login"]
+				}
+			},
+			
+			docker.#Run & {
+				env: AZ_SUB_ID_TOKEN: config.subscriptionId
+				command: {
+					name: "sh"
+					flags: "-c": "az account set -s $AZ_SUB_ID_TOKEN"
+				}
+			}
+		]
 	}
 }
