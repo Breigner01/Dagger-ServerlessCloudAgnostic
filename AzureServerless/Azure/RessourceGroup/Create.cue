@@ -2,12 +2,11 @@ package RessourceGroup
 
 import (
 	"universe.dagger.io/docker"
-	"github.com/AzureServerless/Azure/Login"
 )
 
 #Create: {
-	// Azure Config
-	config: Login.#Config
+
+	image: docker.#Image
 
 	// ResourceGroup name
 	name: string
@@ -18,21 +17,21 @@ import (
 	// Additional arguments
     args: [...string] | *[]
 
-	_image: Login.#Image & {
-		"config": config
-	}
-
-	docker.#Run & {
-		"input": _image.output
-		"command": {
-			"name": "az"
-			"flags": {
-				"group": true
-				"create": true
-				"-l": location
-				"-n": name
+	docker.#Build & {
+		steps: [
+			docker.#Run & {
+				"input": image
+				"command": {
+					"name": "az"
+					"flags": {
+						"group": true
+						"create": true
+						"-l": location
+						"-n": name
+					}
+					"args": args
+				}
 			}
-			"args": args
-		}
+		]
 	}
 }

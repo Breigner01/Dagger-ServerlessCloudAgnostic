@@ -3,13 +3,11 @@ package AzureFuncCoreTool
 import (
 	"dagger.io/dagger"
 	"universe.dagger.io/docker"
-	"github.com/AzureServerless/Azure/Login"
 )
 
 #Publish: {
 
-    // Azure Config
-	config: Login.#Config
+	image: docker.#Image
 
     // Function name
 	name: string
@@ -20,27 +18,27 @@ import (
 	// Additional arguments
     args: [...string] | *[]
 
-	_image: Login.#Image & {
-		"config": config
-	}
-
-	docker.#Run & {
-		"input": _image.output
-		"workdir": "/src"
-		"command": {
-			"name": "func"
-			"flags": {
-				"azure": true
-				"functionapp": true
-				"publish": name
+	docker.#Build & {
+		steps: [
+			docker.#Run & {
+				"input": image
+				"workdir": "/src"
+				"command": {
+					"name": "func"
+					"flags": {
+						"azure": true
+						"functionapp": true
+						"publish": name
+					}
+					"args": args
+				}
+				mounts: {
+					"source": {
+						dest:     "/src"
+						contents: source
+					}
+				}
 			}
-			"args": args
-		}
-		mounts: {
-			"source": {
-				dest:     "/src"
-				contents: source
-			}
-		}
+		]
 	}	
 }

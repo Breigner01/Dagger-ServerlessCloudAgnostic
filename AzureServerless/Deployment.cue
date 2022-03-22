@@ -1,74 +1,73 @@
 package AzureServerless
 
 import (
-    "alpha.dagger.io/dagger"
-    "github.com/AzureServerless/Azure"
-    "github.com/AzureServerless/AzureFuncCoreTool"
+    "dagger.io/dagger"
+	"github.com/AzureServerless/Azure/Login"
+	"github.com/AzureServerless/Azure/RessourceGroup"
+	"github.com/AzureServerless/Azure/Storage/Account"
+	"github.com/AzureServerless/Azure/FunctionApp"
+	"github.com/AzureServerless/AzureFuncCoreTool"
 )
 
-#Config : {
-    "login": Azure.#Azure.#Login.#Config
+#Config: {
 
-    // Azure version
-    "version": string
+	// Azure login
+    login: Login.#Config
 
     // Azure server location
-    "location": string & dagger.#Input
+    location: string
 
     // Azure ressource group name
-    "resourceGroup": "name": string & dagger.#Input
+    resourceGroup: name: string
 
     // Azure storage name
-    "storage": "name": string & dagger.#Input
+    storage: name: string
 
-    // Azure function name
-    "function": "name": string & dagger.#Input
+    // Azure functionApp name
+    functionApp: name: string
 
-    // Azure function name
-    "function": "args": [...string] | *[""]
+    // Azure functionApp name
+    functionApp: version: string | *"4"
+
+    // Azure functionApp args
+    functionApp: args: [...string] | *[]
 
 }
 
 #Deploy: {
 
     // Source directory
-    source: dagger.#Artifact & dagger.#Input
+    source: dagger.#FS
 
     config: #Config
 
-    resourceGroup: Azure.#Azure.#ResourceGroup.#Create & {
-        "version": config.version
-        "name": config.resourceGroup.name
-        "location": config.location
-        "config": config.login
-    }
+	login: Login.#Image & {
+		"config": config.login
+	}
 
-    if resourceGroup.id != _|_ {
-        storage: Azure.#Azure.#Storage.#Account.#Create & {
-            "version": config.version
-            "config": config.login
-            "resourceGroup": name: resourceGroup.name
-            "location": resourceGroup.location
-            "name": config.storage.name
-        }
-        if storage.id != _|_ {
-            function: Azure.#Azure.#FunctionApp.#Create & {
-                "version": config.version
-                "config": config.login
-                "location": resourceGroup.location
-                "resourceGroup": name: resourceGroup.name
-                "storage": name: storage.name
-                "name": config.function.name
-                "args": config.function.args
-            }
-            if function.id != _|_ {
-                funcCoreTool: AzureFuncCoreTool.#AzureFuncCoreTool & {
-                    "version": config.version
-                    "config": config.login
-                    "name": config.function.name
-                    "source": source
-                }
-            }
-        }
-    }
+    createRessourceGroup: RessourceGroup.#Create & {
+		"image": login.output
+		"name": config.resourceGroup.name
+		"location": config.location
+	}
+	createStorageAccount: Account.#Create & {
+		"image": createRessourceGroup.output
+		"resourceGroup": "name": config.resourceGroup.name
+		"name": config.storage.name
+		"location": config.location
+	}
+	createFunctionApp: FunctionApp.#Create & {
+		"image": createStorageAccount.output
+		"resourceGroup": "name": config.resourceGroup.name
+		"storage": "name": config.storage.name 
+		"name": config.functionApp.name
+		"location": config.location
+		"version": config.functionApp.version
+		"args": config.functionApp.args
+	}
+	publishFunction: AzureFuncCoreTool.#Publish & {
+		"image": createFunctionApp.output
+		"name": config.functionApp.name
+		"source": source
+	}
 }
