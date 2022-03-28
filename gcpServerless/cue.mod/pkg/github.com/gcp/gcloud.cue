@@ -9,7 +9,7 @@ import (
     version: string | *"377.0.0"
     package: [string]: string | bool
 
-    docker.#Build & {
+    _gcloud: docker.#Build & {
         steps: [
             docker.#Pull & {
                 source: "gcr.io/google.com/cloudsdktool/google-cloud-cli:\#(version)-alpine"
@@ -49,4 +49,6 @@ import (
             },
         ]
     }
+
+    output: _gcloud.output
 }
