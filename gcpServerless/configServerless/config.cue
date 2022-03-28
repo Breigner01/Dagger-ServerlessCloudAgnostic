@@ -1,8 +1,8 @@
 package configServerless
 
 import (
-	"alpha.dagger.io/gcp"
-	"alpha.dagger.io/gcp/gcr"
+	"github.com/gcp"
+	"github.com/gcp/gcr"
 )
 
 #Config: {
