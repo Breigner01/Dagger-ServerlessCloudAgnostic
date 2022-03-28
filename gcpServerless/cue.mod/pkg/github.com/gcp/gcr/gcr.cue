@@ -2,7 +2,6 @@
 package gcr
 
 import (
-	"dagger.io/dagger"
 	"universe.dagger.io/docker"
 	"github.com/gcp"
 )
