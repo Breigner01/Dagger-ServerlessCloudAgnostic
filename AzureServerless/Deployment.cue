@@ -32,6 +32,9 @@ import (
     // Azure functionApp args
     functionApp: args: [...string] | *[]
 
+	// Azure publish function args
+    publishFunction: args: [...string] | *[]
+
 }
 
 #Deploy: {
@@ -69,5 +72,6 @@ import (
 		"image": createFunctionApp.output
 		"name": config.functionApp.name
 		"source": source
+		"args": config.publishFunction.args
 	}
 }

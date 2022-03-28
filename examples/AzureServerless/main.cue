@@ -30,7 +30,8 @@ dagger.#Plan & {
 				functionApp: {
 					name: "fa121211"
 					args: ["--runtime", "node", "--runtime-version", "14"]
-				} 
+				}
+				publishFunction: args: ["--javascript"]
 
 			}
 		}
