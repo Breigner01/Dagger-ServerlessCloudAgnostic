@@ -35,6 +35,13 @@ import (
 	// Azure publish function args
     publishFunction: args: [...string] | *[]
 
+	// Azure publish function sleep time before exec
+    publishFunction: sleep: string
+
+	// Sleep time default value
+	if publishFunction.sleep == _|_ {
+		publishFunction: sleep: "15"
+	}
 }
 
 #Deploy: {
@@ -73,9 +80,6 @@ import (
 		"name": config.functionApp.name
 		"source": source
 		"args": config.publishFunction.args
-		"sleep": {
-			isSleep: true
-			sleepTime: "3"
-		}
+		"sleep": config.publishFunction.sleep
 	}
 }

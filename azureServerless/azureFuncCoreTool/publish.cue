@@ -18,26 +18,22 @@ import (
 	// Additional arguments
     args: [...string] | *[]
 
-	sleep: {
-		"isSleep": bool | *false
-		"sleepTime": string | *""
-	}
+	sleep: string | *"0"
 
-	docker.#Build & {
+	publish: docker.#Build & {
 		steps: [
-			if sleep.isSleep == true {
-				dockerSleep: docker.#Run & {
-					"input": image
-					"command": {
-						"name": "sleep"
-						"flags": {
-							"\(sleep.sleepTime)": true
-						}
-					}
-				},
-			},
 			docker.#Run & {
 				"input": image
+			},
+			docker.#Run & {
+				"command": {
+					"name": "sleep"
+					"flags": {
+						"\(sleep)": true
+					}
+				}
+			},
+			docker.#Run & {
 				"workdir": "/src"
 				"command": {
 					"name": "func"

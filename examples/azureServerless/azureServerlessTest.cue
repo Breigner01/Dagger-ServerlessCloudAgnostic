@@ -25,10 +25,10 @@ dagger.#Plan & {
 					version: "3.0"
 				}
 				location: "northeurope"
-				resourceGroup: name: "rg12121"
-				storage: name: "st21212"
+				resourceGroup: name: "daggerrg"
+				storage: name: "daggerst1"
 				functionApp: {
-					name: "fa121211"
+					name: "daggerfa1"
 					args: ["--runtime", "node", "--runtime-version", "14"]
 				}
 				publishFunction: args: ["--javascript"]
