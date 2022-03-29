@@ -1,22 +1,26 @@
-package RessourceGroup
+package account
 
 import (
 	"universe.dagger.io/docker"
 )
 
+// Create a storage account
 #Create: {
 
 	image: docker.#Image
-
+	
 	// ResourceGroup name
-	name: string
+	resourceGroup: name: string
 
-	// ResourceGroup location
+	// StorageAccount location
 	location: string
+
+	// StorageAccount name
+	name: string
 
 	// Additional arguments
     args: [...string] | *[]
-
+	
 	docker.#Build & {
 		steps: [
 			docker.#Run & {
@@ -24,10 +28,13 @@ import (
 				"command": {
 					"name": "az"
 					"flags": {
-						"group": true
+						"storage": true
+						"account": true
 						"create": true
-						"-l": location
 						"-n": name
+						"-g": resourceGroup.name
+						"-l": location
+						
 					}
 					"args": args
 				}

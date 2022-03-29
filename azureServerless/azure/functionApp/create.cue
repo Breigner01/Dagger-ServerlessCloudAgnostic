@@ -1,4 +1,4 @@
-package FunctionApp
+package functionApp
 
 import (
     "universe.dagger.io/docker"

@@ -1,9 +1,9 @@
-package AzureServerlessTest
+package azureServerlessTest
 
 import (
 	"dagger.io/dagger"
-	"github.com/AzureServerless/Azure/Login"
-	"github.com/AzureServerless"
+	"github.com/azureServerless/azure/login"
+	"github.com/azureServerless"
 )
 
 dagger.#Plan & {
@@ -15,12 +15,12 @@ dagger.#Plan & {
 	}
 
 	actions: {
-		"deployFunction": AzureServerless.#Deploy & {
+		"deployFunction": azureServerless.#Deploy & {
 		
 			source: client.filesystem."./deploy_function".read.contents
 
-			config: AzureServerless.#Config & {
-				login: Login.#Config & {
+			config: azureServerless.#Config & {
+				"login": login.#Config & {
 					subscriptionId: client.env.AZ_SUB_ID_TOKEN
 					version: "3.0"
 				}

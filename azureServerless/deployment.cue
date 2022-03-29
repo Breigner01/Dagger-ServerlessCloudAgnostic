@@ -1,18 +1,18 @@
-package AzureServerless
+package azureServerless
 
 import (
     "dagger.io/dagger"
-	"github.com/AzureServerless/Azure/Login"
-	"github.com/AzureServerless/Azure/RessourceGroup"
-	"github.com/AzureServerless/Azure/Storage/Account"
-	"github.com/AzureServerless/Azure/FunctionApp"
-	"github.com/AzureServerless/AzureFuncCoreTool"
+	azLogin "github.com/azureServerless/azure/login"
+	"github.com/azureServerless/azure/resourceGroup"
+	"github.com/azureServerless/azure/storage/account"
+	"github.com/azureServerless/azure/functionApp"
+	"github.com/azureServerless/azureFuncCoreTool"
 )
 
 #Config: {
 
 	// Azure login
-    login: Login.#Config
+    login: azLogin.#Config
 
     // Azure server location
     location: string
@@ -26,7 +26,7 @@ import (
     // Azure functionApp name
     functionApp: name: string
 
-    // Azure functionApp name
+    // Azure functionApp version
     functionApp: version: string | *"4"
 
     // Azure functionApp args
@@ -44,22 +44,22 @@ import (
 
     config: #Config
 
-	login: Login.#Image & {
+	login: azLogin.#Image & {
 		"config": config.login
 	}
 
-    createRessourceGroup: RessourceGroup.#Create & {
+    createRessourceGroup: resourceGroup.#Create & {
 		"image": login.output
 		"name": config.resourceGroup.name
 		"location": config.location
 	}
-	createStorageAccount: Account.#Create & {
+	createStorageAccount: account.#Create & {
 		"image": createRessourceGroup.output
 		"resourceGroup": "name": config.resourceGroup.name
 		"name": config.storage.name
 		"location": config.location
 	}
-	createFunctionApp: FunctionApp.#Create & {
+	createFunctionApp: functionApp.#Create & {
 		"image": createStorageAccount.output
 		"resourceGroup": "name": config.resourceGroup.name
 		"storage": "name": config.storage.name 
@@ -68,10 +68,14 @@ import (
 		"version": config.functionApp.version
 		"args": config.functionApp.args
 	}
-	publishFunction: AzureFuncCoreTool.#Publish & {
+	publishFunction: azureFuncCoreTool.#Publish & {
 		"image": createFunctionApp.output
 		"name": config.functionApp.name
 		"source": source
 		"args": config.publishFunction.args
+		"sleep": {
+			isSleep: true
+			sleepTime: "3"
+		}
 	}
 }

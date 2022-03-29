@@ -1,4 +1,4 @@
-package AzureFuncCoreTool
+package azureFuncCoreTool
 
 import (
 	"dagger.io/dagger"
@@ -18,8 +18,24 @@ import (
 	// Additional arguments
     args: [...string] | *[]
 
+	sleep: {
+		"isSleep": bool | *false
+		"sleepTime": string | *""
+	}
+
 	docker.#Build & {
 		steps: [
+			if sleep.isSleep == true {
+				dockerSleep: docker.#Run & {
+					"input": image
+					"command": {
+						"name": "sleep"
+						"flags": {
+							"\(sleep.sleepTime)": true
+						}
+					}
+				},
+			},
 			docker.#Run & {
 				"input": image
 				"workdir": "/src"
