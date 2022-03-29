@@ -14,5 +14,5 @@ import (
 	// GCP project
 	project: string
 	// GCP service key
-	serviceKey: dagger.#Secret
+	serviceKey: dagger.#FS
 }
