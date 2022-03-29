@@ -8,12 +8,13 @@ import (
 #GCloud: {
     config: #Config
     version: string | *"377.0.0"
-    package: [string]: string | bool
+    packages: [pkgName=string]: version: string | *""
 
     _gcloud: docker.#Build & {
         steps: [
             alpine.#Build & {
-                packages: [
+                "packages": [
+                    packages,
                     "bash",
                     "python3",
                     "jq",
