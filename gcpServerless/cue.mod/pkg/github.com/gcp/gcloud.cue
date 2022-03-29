@@ -1,7 +1,7 @@
 package gcp
 
 import (
-    "dagger.io/dagger"
+    "universe.dagger.io/alpine"
     "universe.dagger.io/docker"
 )
 
@@ -12,15 +12,34 @@ import (
 
     _gcloud: docker.#Build & {
         steps: [
-            docker.#Pull & {
-                source: "gcr.io/google.com/cloudsdktool/google-cloud-cli:" + version + "-alpine"
+            alpine.#Build & {
+                packages: [
+                    "bash",
+                    "python3",
+                    "jq",
+                    "curl",
+                ]
             },
 
             docker.#Run & {
-                mounts: dagger.#Mount & {
-                    type: "secret"
-                    dest: "/service_key"
-                    contents: config.serviceKey
+                command: {
+                    name: "sh"
+                    args: [
+                        "-c",
+                        "curl", "-sFL", "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-\(version)-linux-x86_64.tar.gz",
+                        "|", "tar", "-C", "/usr/local", "-zx", "&&",
+                        "ln", "-s", "/usr/local/google-cloud-sdk/bin/gcloud", "/usr/local/bin", "&&",
+                        "ln", "-s", "/usr/local/google-cloud-sdk/bin/gsutil", "/usr/local/bin",
+                    ]
+                }
+            },
+
+            docker.#Run & {
+                mounts: {
+                    source: {
+                        dest: "/service_key"
+                        contents: config.serviceKey
+                    }
                 }
                 command: {
                     name: "gcloud"

@@ -31,7 +31,12 @@ import (
 
 			docker.#Run & {
 				always: true
-				mounts: "/src": from: source
+				mounts: {
+					"source": {
+						dest: "/src"
+						contents: source
+					}
+				}
 				env: {
 					"NAME": name
 					"RUNTIME": runtime

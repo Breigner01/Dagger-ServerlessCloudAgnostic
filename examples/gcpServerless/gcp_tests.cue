@@ -9,16 +9,17 @@ import (
 
 dagger.#Plan & {
 	client: {
-		env: GCP_SERVICE_KEY: dagger.#Secret
-
-		filesystem: "src": read: contents: dagger.#FS
+		filesystem: {
+			"src": read: contents: dagger.#FS
+			"secrets/dagger-dev-339319-b3059441ca31.json": read: contents: dagger.#FS
+		}
 	}
 
 	actions: {
 		HelloWorld: function.#Function & {
 			config:	configServerless.#Config & {
 				gcpConfig: gcp.#Config & {
-					serviceKey: client.env.GCP_SERVICE_KEY
+					serviceKey: client.filesystem."secrets/dagger-dev-339319-b3059441ca31.json".read.contents
 					project: "dagger-dev-339319"
 					region: "europe-west3"
 					zone: "europe-west3-b"
