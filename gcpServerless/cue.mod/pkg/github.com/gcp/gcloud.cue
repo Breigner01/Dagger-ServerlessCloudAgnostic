@@ -7,19 +7,22 @@ import (
 
 #GCloud: {
     config: #Config
-    version: string | *"377.0.0"
-    packages: [pkgName=string]: version: string | *""
+    version: string | *"380.0.0"
+    packages: [pkgName=string]: {
+        version: string | *""
+    }
 
     _gcloud: docker.#Build & {
         steps: [
             alpine.#Build & {
-                "packages": [
+                "packages": {
                     packages,
-                    "bash",
-                    "python3",
-                    "jq",
-                    "curl",
-                ]
+                    bash: {},
+                    python: {version: "3"},
+                    jq: {},
+                    curl: {},
+                    gcompat: {},
+                }
             },
 
             docker.#Run & {
@@ -27,10 +30,11 @@ import (
                     name: "sh"
                     args: [
                         "-c",
-                        "curl", "-sFL", "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-\(version)-linux-x86_64.tar.gz",
-                        "|", "tar", "-C", "/usr/local", "-zx", "&&",
-                        "ln", "-s", "/usr/local/google-cloud-sdk/bin/gcloud", "/usr/local/bin", "&&",
-                        "ln", "-s", "/usr/local/google-cloud-sdk/bin/gsutil", "/usr/local/bin",
+                        #"""
+                        curl -sfL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-\#(version)-linux-x86_64.tar.gz | tar -C /usr/local -zx
+                        ln -s /usr/local/google-cloud-sdk/bin/gcloud /usr/local/bin
+                        ln -s /usr/local/google-cloud-sdk/bin/gsutil /usr/local/bin
+                        """#,
                     ]
                 }
             },
@@ -55,23 +59,23 @@ import (
                 }
             },
 
-            if (config.region & null) != _|_ {
-                docker.#Run & {
-                    command: {
-                        name: "gcloud"
-                        args: ["-q", "config", "set", "compute/region", config.region]
-                    }
-                }
-            },
+            //if (config.region & null) != _|_ {
+            //    docker.#Run & {
+            //        command: {
+            //            name: "gcloud"
+            //            args: ["-q", "config", "set", "compute/region", config.region]
+            //        }
+            //    }
+            //},
 
-            if (config.zone & null) != _|_ {
-                docker.#Run & {
-                    command: {
-                        name: "gcloud"
-                        args: ["-q", "config", "set", "compute/zone", config.zone]
-                    }
-                }
-            },
+            //if (config.zone & null) != _|_ {
+            //    docker.#Run & {
+            //        command: {
+            //            name: "gcloud"
+            //            args: ["-q", "config", "set", "compute/zone", config.zone]
+            //        }
+            //    }
+            //},
         ]
     }
 

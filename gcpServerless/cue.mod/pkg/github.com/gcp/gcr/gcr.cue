@@ -14,26 +14,25 @@ import (
 	// GCR registry username
 	username: "oauth2accesstoken"
 
-	// GCR registry secret
-	docker.#Build & {
-		steps: [
-			gcp.#GCloud & {
-				"config": config
-			},
-
-			docker.#Run & {
-				command: {
-					name: "/bin/bash"
-					args: [
-						"--noprofile",
-						"--norc",
-						"-eo",
-						"pipefail",
-						"-c",
-						"printf", "$(gcloud auth print-access-token)", ">", "/token.txt"
-					]
-				}
-			},
-		]
+	_gcloud: gcp.#GCloud & {
+		"config": config
 	}
+
+	// GCR registry secret
+	_run: docker.#Run & {
+		input: _gcloud.output
+		command: {
+			name: "/bin/bash"
+			args: [
+				"--noprofile",
+				"--norc",
+				"-eo",
+				"pipefail",
+				"-c",
+				"printf $(gcloud auth print-access-token) > /token.txt"
+			]
+		}
+	}
+
+	output: _run.output
 }
