@@ -3,7 +3,6 @@ package function
 import (
 	"dagger.io/dagger"
 	"universe.dagger.io/docker"
-	"github.com/gcp"
 	"github.com/gcpServerless/configServerless"
 )
 
@@ -22,38 +21,33 @@ import (
 	runtime: #Runtime
 
 	// Directory containing the files for the cloud functions
-	source: dagger.#FS | string
-	docker.#Build & {
-		steps: [
-			gcp.#GCloud & {
-				"config": config.gcpConfig
-			},
+	source: dagger.#FS
 
-			docker.#Run & {
-				always: true
-				mounts: {
-					"source": {
-						dest: "/src"
-						contents: source
-					}
-				}
-				env: {
-					"NAME": name
-					"RUNTIME": runtime
-				}
-				command: {
-					name: "/bin/bash"
-					args: [
-						"-c",
-						"gcloud", "functions",
-						"deploy", "${NAME}",
-						"--runtime", "${RUNTIME}",
-						"--source", "/src",
-						"--trigger-http",
-						"--allow-unauthenticated",
-					]
-				}
+	docker.#Run & {
+		input: config.credentials.output
+		always: true
+		workdir: "/src"
+		mounts: {
+			"source": {
+				dest: "/src"
+				contents: source
 			}
-		]
+		}
+		env: {
+			"NAME": name
+			"RUNTIME": runtime
+		}
+		command: {
+			name: "/bin/bash"
+			args: [
+				"-c",
+				"gcloud", "functions",
+				"deploy", "${NAME}",
+				"--runtime", "${RUNTIME}",
+				"--source", "/src",
+				"--trigger-http",
+				"--allow-unauthenticated",
+			]
+		}
 	}
 }

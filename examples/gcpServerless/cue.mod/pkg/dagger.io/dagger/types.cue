@@ -25,13 +25,14 @@ package dagger
 	$dagger: secret: _id: string
 }
 
-// A reference to a network service endpoint, for example:
+// A reference to a network socket, for example:
+//  - A UNIX socket
 //  - A TCP or UDP port
-//  - A unix socket
-//  - An HTTPS endpoint
-#Service: {
+//  - A Windows named pipe
+#Socket: {
 	$dagger: service: _id: string
 }
 
 // A network service address
-#Address: string & =~"^(tcp://|unix://|udp://).*"
+#Address: string & =~"^(unix://|npipe://).+"
+// TODO: #Address: string & =~"^(tcp://|unix://|npipe://|udp://).+"
