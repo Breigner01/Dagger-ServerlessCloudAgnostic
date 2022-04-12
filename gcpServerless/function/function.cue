@@ -8,8 +8,7 @@ import (
 
 // The runtimes are copied from https://cloud.google.com/functions/docs/concepts/exec
 // If the list would come to change please submit an issue or a pull request to integrate it
-#Runtime: "nodejs16" | "nodejs14" | "nodejs12" | "nodejs10" | "nodejs8" | "nodejs6" | "python39" | "python38" |
-	"python37" | "go116" | "go113" | "go111" | "java11" | "dotnet3" | "ruby27" | "ruby26" | "php74"
+#Runtime: "nodejs16" | "nodejs14" | "nodejs12" | "nodejs10" | "nodejs8" | "nodejs6" | "python39" | "python38" | "python37" | "go116" | "go113" | "go111" | "java11" | "dotnet3" | "ruby27" | "ruby26" | "php74"
 
 #Function: {
 
@@ -23,13 +22,16 @@ import (
 	// Directory containing the files for the cloud functions
 	source: dagger.#FS
 
+	_functionName: name
+
 	docker.#Run & {
 		input: config.credentials.output
-		always: true
+		//input:   docker.#Image & {config.credentials.output}
+		always:  true
 		workdir: "/src"
 		mounts: {
 			"source": {
-				dest: "/src"
+				dest:     "/src"
 				contents: source
 			}
 		}
@@ -38,8 +40,10 @@ import (
 			args: [
 				"-c",
 				#"""
-				gcloud functions deploy \#(name) --runtime \#(runtime) --source /src --trigger-http --allow-unauthenticated
-				"""#,
+gcloud functions deploy \#(_functionName) --runtime \#(runtime) \
+--source /src --trigger-http --allow-unauthenticated \
+--region \#(config.gcpConfig.region) --project \#(config.gcpConfig.project)
+"""#,
 			]
 		}
 	}
