@@ -2,6 +2,7 @@ package netlify
 
 import (
 	"dagger.io/dagger"
+	"dagger.io/dagger/core"
 
 	"universe.dagger.io/docker"
 	"universe.dagger.io/netlify"
@@ -12,7 +13,7 @@ import (
 dagger.#Plan & {
 	client: commands: sops: {
 		name: "sops"
-		args: ["-d", "../../test_secrets.yaml"]
+		args: ["-d", "../../secrets_sops.yaml"]
 		stdout: dagger.#Secret
 	}
 
@@ -20,16 +21,16 @@ dagger.#Plan & {
 
 		// Configuration common to all tests
 		common: {
-			testSecrets: dagger.#DecodeSecret & {
+			testSecrets: core.#DecodeSecret & {
 				input:  client.commands.sops.stdout
 				format: "yaml"
 			}
 
-			token: testSecrets.output.netlifyToken.contents
+			token: testSecrets.output.NETLIFY_TOKEN.contents
 
 			marker: "hello world"
 
-			data: dagger.#WriteFile & {
+			data: core.#WriteFile & {
 				input:    dagger.#Scratch
 				path:     "index.html"
 				contents: marker
@@ -40,7 +41,7 @@ dagger.#Plan & {
 		simple: {
 			// Deploy to netlify
 			deploy: netlify.#Deploy & {
-				team:     "blocklayer"
+				team:     "dagger-test"
 				token:    common.token
 				site:     "dagger-test"
 				contents: common.data.output
@@ -56,7 +57,7 @@ dagger.#Plan & {
 		swapImage: {
 			// Deploy to netlify
 			deploy: netlify.#Deploy & {
-				team:     "blocklayer"
+				team:     "dagger-test"
 				token:    common.token
 				site:     "dagger-test"
 				contents: common.data.output

@@ -5,13 +5,15 @@ import (
 )
 
 // Go image default version
-#DefaultVersion: "1.16"
+_#DefaultVersion: "1.18"
 
 // Build a go base image
 #Image: {
-	version: *#DefaultVersion | string
+	version: *_#DefaultVersion | string
 
 	packages: [pkgName=string]: version: string | *""
+	// FIXME Remove once golang image include 1.18 *or* go compiler is smart with -buildvcs
+	packages: git: _
 
 	// FIXME Basically a copy of alpine.#Build with a different image
 	// Should we create a special definition?

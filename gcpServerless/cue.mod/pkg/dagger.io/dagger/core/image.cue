@@ -1,31 +1,9 @@
-package dagger
+package core
 
 import (
 	"list"
+	"dagger.io/dagger"
 )
-
-// Upload a container image to a remote repository
-#Push: {
-	$dagger: task: _name: "Push"
-
-	// Target repository address
-	dest: #Ref
-
-	// Filesystem contents to push
-	input: #FS
-
-	// Container image config
-	config: #ImageConfig
-
-	// Authentication
-	auth?: {
-		username: string
-		secret:   #Secret
-	}
-
-	// Complete ref of the pushed image, including digest
-	result: #Ref
-}
 
 // A ref is an address for a remote container image
 //
@@ -62,6 +40,29 @@ import (
 	retries?:     int
 }
 
+// Upload a container image to a remote repository
+#Push: {
+	$dagger: task: _name: "Push"
+
+	// Target repository address
+	dest: #Ref
+
+	// Filesystem contents to push
+	input: dagger.#FS
+
+	// Container image config
+	config: #ImageConfig
+
+	// Authentication
+	auth?: {
+		username: string
+		secret:   dagger.#Secret
+	}
+
+	// Complete ref of the pushed image, including digest
+	result: #Ref
+}
+
 // Download a container image from a remote repository
 #Pull: {
 	$dagger: task: _name: "Pull"
@@ -72,11 +73,11 @@ import (
 	// Authentication
 	auth?: {
 		username: string
-		secret:   #Secret
+		secret:   dagger.#Secret
 	}
 
 	// Root filesystem of downloaded image
-	output: #FS
+	output: dagger.#FS
 
 	// Image digest
 	digest: string
@@ -90,7 +91,7 @@ import (
 	$dagger: task: _name: "Dockerfile"
 
 	// Source directory to build
-	source: #FS
+	source: dagger.#FS
 
 	dockerfile: *{
 		path: string | *"Dockerfile"
@@ -101,7 +102,7 @@ import (
 	// Authentication
 	auth: [registry=string]: {
 		username: string
-		secret:   #Secret
+		secret:   dagger.#Secret
 	}
 
 	platforms?: [...string]
@@ -111,7 +112,7 @@ import (
 	hosts?: [string]:    string
 
 	// Root filesystem produced
-	output: #FS
+	output: dagger.#FS
 
 	// Container image config produced
 	config: #ImageConfig
@@ -122,7 +123,7 @@ import (
 	$dagger: task: _name: "Export"
 
 	// Filesystem contents to export
-	input: #FS
+	input: dagger.#FS
 
 	// Container image config
 	config: #ImageConfig
@@ -140,7 +141,7 @@ import (
 	imageID: string
 
 	// Root filesystem with exported file
-	output: #FS
+	output: dagger.#FS
 }
 
 // Change image config

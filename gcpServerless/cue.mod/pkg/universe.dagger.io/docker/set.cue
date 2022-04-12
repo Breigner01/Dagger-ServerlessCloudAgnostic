@@ -1,7 +1,7 @@
 package docker
 
 import (
-	"dagger.io/dagger"
+	"dagger.io/dagger/core"
 )
 
 // Change image config
@@ -10,9 +10,9 @@ import (
 	input: #Image
 
 	// The image config to change
-	config: dagger.#ImageConfig
+	config: core.#ImageConfig
 
-	_set: dagger.#Set & {
+	_set: core.#Set & {
 		"input":  input.config
 		"config": config
 	}

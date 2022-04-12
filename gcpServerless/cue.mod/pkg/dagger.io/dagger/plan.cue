@@ -23,6 +23,11 @@ package dagger
 			}
 		}
 
+		// Access client network endpoints
+		network: [address=#Address]: _#clientNetwork & {
+			"address": address
+		}
+
 		// Access client environment variables
 		env: _#clientEnv
 
@@ -34,7 +39,8 @@ package dagger
 	}
 
 	// Configure platform execution
-	platform?: string
+	// FIXME: temporarily disabled
+	// platform?: string
 
 	// Execute actions in containers
 	actions: {
@@ -65,13 +71,6 @@ _#clientFilesystemRead: {
 		// Filename patterns to exclude
 		// Example: ["node_modules"]
 		exclude?: [...string]
-	} | {
-		// CUE type defines expected content:
-		//     #Service: unix socket or npipe
-		contents: #Service
-
-		// Type of service
-		type: *"unix" | "npipe"
 	}
 }
 
@@ -90,6 +89,22 @@ _#clientFilesystemWrite: {
 		// Filesystem contents to export
 		// Reference an #FS field produced by an action
 		contents: #FS
+	}
+}
+
+_#clientNetwork: {
+	$dagger: task: _name: "ClientNetwork"
+
+	// URL to the socket
+	// Example: unix:///var/run/docker.sock
+	address: #Address
+
+	{
+		// unix socket or npipe
+		connect: #Socket
+		// } | {
+		//  // FIXME: not yet implemented
+		//  listen: #Socket
 	}
 }
 
