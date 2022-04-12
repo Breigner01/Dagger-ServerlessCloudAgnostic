@@ -45,6 +45,10 @@ import (
 	contents: dagger.#FS
 	source:   string | *"/"
 	dest:     string | *"/"
+	// Optionally include certain files
+	include: [...string]
+	// Optionally exclude certain files
+	exclude: [...string]
 
 	// Execute copy operation
 	_copy: core.#Copy & {
@@ -52,6 +56,8 @@ import (
 		"contents": contents
 		"source":   source
 		"dest":     dest
+		"include":  include
+		"exclude":  exclude
 	}
 
 	output: #Image & {

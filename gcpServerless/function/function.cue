@@ -33,20 +33,13 @@ import (
 				contents: source
 			}
 		}
-		env: {
-			"NAME": name
-			"RUNTIME": runtime
-		}
 		command: {
 			name: "/bin/bash"
 			args: [
 				"-c",
-				"gcloud", "functions",
-				"deploy", "${NAME}",
-				"--runtime", "${RUNTIME}",
-				"--source", "/src",
-				"--trigger-http",
-				"--allow-unauthenticated",
+				#"""
+				gcloud functions deploy \#(name) --runtime \#(runtime) --source /src --trigger-http --allow-unauthenticated
+				"""#,
 			]
 		}
 	}
