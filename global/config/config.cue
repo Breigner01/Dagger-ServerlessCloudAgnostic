@@ -2,17 +2,17 @@ package config
 
 import (
 	"github.com/gcpServerless/configServerless"
-	"github.com/AzureServerless"
-	"alpha.dagger.io/aws"
+	"github.com/azureServerless"
+	//"alpha.dagger.io/aws"
 )
 
 #Config: {
 	// The config coming from one of the serverless package
 	gcpConfig: configServerless.#Config | *null
 
-	azureConfig: AzureServerless.#Config | *null
+	azureConfig: azureServerless.#Config | *null
 
-	awsConfig: aws.#Config | *null
+	//awsConfig: aws.#Config | *null
 
-	provider: "gcp" | "azure" | "aws"
+	provider: "gcp" | "azure"// | "aws"
 }
