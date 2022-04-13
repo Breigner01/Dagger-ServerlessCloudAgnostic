@@ -8,7 +8,7 @@ import (
 
     image: docker.#Image
 
-    // Azure FonctionApp version
+    // Azure FunctionApp version
 	version: string
 
     // Function name
@@ -26,24 +26,20 @@ import (
     // Additional arguments
     args: [...string] | *[]
 
-    docker.#Build & {
-        steps: [
-            docker.#Run & {
-                "input": image
-                "command": {
-                    "name": "az"
-                    "flags": {
-                        "functionapp": true
-                        "create": true
-                        "--resource-group": resourceGroup.name
-                        "--consumption-plan-location": location
-                        "--name": name
-                        "--storage-account": storage.name
-                        "--functions-version": version
-                    }
-                    "args": args
-                }
+    docker.#Run & {
+        "input": image
+        "command": {
+            "name": "az"
+            "flags": {
+                "functionapp": true
+                "create": true
+                "--resource-group": resourceGroup.name
+                "--consumption-plan-location": location
+                "--name": name
+                "--storage-account": storage.name
+                "--functions-version": version
             }
-        ]
+            "args": args
+        }
     }
 }

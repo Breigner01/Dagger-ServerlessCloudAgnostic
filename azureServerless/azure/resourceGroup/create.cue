@@ -17,21 +17,19 @@ import (
 	// Additional arguments
     args: [...string] | *[]
 
-	docker.#Build & {
-		steps: [
-			docker.#Run & {
-				"input": image
-				"command": {
-					"name": "az"
-					"flags": {
-						"group": true
-						"create": true
-						"-l": location
-						"-n": name
-					}
-					"args": args
-				}
+	_run: docker.#Run & {
+		"input": image
+		"command": {
+			"name": "az"
+			"flags": {
+				"group": true
+				"create": true
+				"-l": location
+				"-n": name
 			}
-		]
+			"args": args
+		}
 	}
+
+	output: _run.output
 }
