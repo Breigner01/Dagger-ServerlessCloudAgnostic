@@ -3,7 +3,6 @@ package config
 import (
 	"github.com/gcpServerless/configServerless"
 	"github.com/azureServerless"
-	//"alpha.dagger.io/aws"
 )
 
 #Config: {
@@ -12,7 +11,5 @@ import (
 
 	azureConfig: azureServerless.#Config | *null
 
-	//awsConfig: aws.#Config | *null
-
-	provider: "gcp" | "azure"// | "aws"
+	provider: "gcp" | "azure"
 }

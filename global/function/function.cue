@@ -5,8 +5,6 @@ import (
 	"github.com/global/config"
 	gcpFunction "github.com/gcpServerless/function"
 	"github.com/azureServerless"
-	//awsServerless "github.com/grouville/dagger-serverless/serverless"
-	//"github.com/grouville/dagger-serverless/serverless/events"
 )
 
 #Function: {
@@ -46,20 +44,4 @@ import (
 			"source": source
 		}
 	}
-	//| {
-	//    configFunction: provider: "aws"
-	//    function: awsServerless.#Function & {
-	//        "runtime": runtime + runtimeVersion
-	//        code: awsServerless.#Code & {
-	//            "name": name
-	//            "config": configFunction.awsConfig
-	//            "source": source
-	//        }
-	//        "events": {
-	//            "api": events.#Api & {
-	//                "path": "/" + name
-	//            }
-	//        }
-	//    }
-	//}
 }
