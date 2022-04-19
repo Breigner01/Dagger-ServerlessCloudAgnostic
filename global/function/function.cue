@@ -3,7 +3,7 @@ package function
 import (
 	"dagger.io/dagger"
 	"github.com/global/config"
-	gcpFunction "github.com/gcpServerless/function"
+	gcpFunction "github.com/gcp/function"
 	"github.com/azureServerless"
 )
 

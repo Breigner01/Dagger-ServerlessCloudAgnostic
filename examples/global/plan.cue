@@ -5,7 +5,7 @@ import (
 	"github.com/global/config"
 	"github.com/global/function"
 	"github.com/gcp"
-	"github.com/gcpServerless/configServerless"
+	"github.com/gcp/gcr"
 )
 
 dagger.#Plan & {
@@ -19,8 +19,8 @@ dagger.#Plan & {
 	actions: {
 		Gcp: function.#Function & {
 			configFunction: config.#Config & {
-				gcpConfig: configServerless.#Config & {
-					gcpConfig: gcp.#Config & {
+				gcpConfig: gcr.#Credentials & {
+					config: gcp.#Config & {
 						serviceKey: client.filesystem."./secrets/dagger-dev-339319-b3059441ca31.json".read.contents
 						project: "dagger-dev-339319"
 						region: "europe-west3"
