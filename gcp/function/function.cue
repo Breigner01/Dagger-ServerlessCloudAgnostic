@@ -26,7 +26,6 @@ import (
 
 	docker.#Run & {
 		input: config.output
-		//input:   docker.#Image & {config.credentials.output}
 		always:  true
 		workdir: "/src"
 		mounts: {
