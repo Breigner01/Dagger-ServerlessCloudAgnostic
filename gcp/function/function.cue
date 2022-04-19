@@ -13,7 +13,7 @@ import (
 #Function: {
 
 	// The Config from gcpServerless/configServerless.#Config
-	credentials: gcr.#Credentials
+	config: gcr.#Credentials
 	// The name of the function on gcp, the function developed and the file
 	name: string
 	// The runtime used for the function
@@ -25,7 +25,7 @@ import (
 	_functionName: name
 
 	docker.#Run & {
-		input: credentials.output
+		input: config.output
 		//input:   docker.#Image & {config.credentials.output}
 		always:  true
 		workdir: "/src"
@@ -42,7 +42,7 @@ import (
 				#"""
 gcloud functions deploy \#(_functionName) --runtime \#(runtime) \
 --source /src --trigger-http --allow-unauthenticated \
---region \#(credentials.config.region) --project \#(credentials.config.project)
+--region \#(config.config.region) --project \#(config.config.project)
 """#,
 			]
 		}
