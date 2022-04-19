@@ -1,13 +1,13 @@
 package config
 
 import (
-	"github.com/gcpServerless/configServerless"
+	"github.com/gcp/gcr"
 	"github.com/azureServerless"
 )
 
 #Config: {
 	// The config coming from one of the serverless package
-	gcpConfig: configServerless.#Config | *null
+	gcpConfig: gcr.#Credentials | *null
 
 	azureConfig: azureServerless.#Config | *null
 

@@ -17,7 +17,7 @@ dagger.#Plan & {
 
 	actions: {
 		HelloWorld: function.#Function & {
-			credentials: gcr.#Credentials & {
+			config: gcr.#Credentials & {
 				config: gcp.#Config & {
 					serviceKey: client.filesystem."./secrets/dagger-dev-339319-b3059441ca31.json".read.contents
 					project: "dagger-dev-339319"

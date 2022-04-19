@@ -1,8 +1,0 @@
-{
-  "scripts": {
-    "dep": "yarn install"
-  },
-  "dependencies": {
-    "temp-units-conv": "^1.0.2"
-  }
-}
