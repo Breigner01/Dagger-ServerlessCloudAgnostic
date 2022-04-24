@@ -10,8 +10,9 @@ import (
 
 dagger.#Plan & {
 	client: {
+		env: GCP_PROJECT: string
 		filesystem: {
-			"./secrets/dagger-dev-339319-b3059441ca31.json": read: contents: dagger.#Secret
+			"./secrets/serviceKey.json": read: contents: dagger.#Secret
 			"./src": read: contents: dagger.#FS
 		}
 	}
@@ -21,8 +22,8 @@ dagger.#Plan & {
 			configFunction: config.#Config & {
 				gcpConfig: gcr.#Credentials & {
 					config: gcp.#Config & {
-						serviceKey: client.filesystem."./secrets/dagger-dev-339319-b3059441ca31.json".read.contents
-						project: "dagger-dev-339319"
+						serviceKey: client.filesystem."./secrets/serviceKey.json".read.contents
+						project: client.env.GCP_PROJECT
 						region: "europe-west3"
 						zone: "europe-west3-b"
 					}
