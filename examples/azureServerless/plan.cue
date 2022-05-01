@@ -1,4 +1,4 @@
-package azureServerlessTest
+	package azureServerlessTest
 
 import (
 	"dagger.io/dagger"

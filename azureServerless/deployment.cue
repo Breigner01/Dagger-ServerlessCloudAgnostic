@@ -40,7 +40,7 @@ import (
 
 	// Sleep time default value
 	if publishFunction.sleep == _|_ {
-		publishFunction: sleep: "15"
+		publishFunction: sleep: "30"
 	}
 }
 

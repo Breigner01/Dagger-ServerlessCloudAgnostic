@@ -11,3 +11,9 @@ For more details, go can have a look [here](./agnostic/README.md)
 This package encapsulates calls to gcp to deploy a cloud function so that it is easier to do
 
 For more details, you can have a look [here](./gcp/README.md)
+
+## Azure Package
+
+This package encapsulates calls to Azure and Azure Func core Tool to deploy a cloud function so that it is easier to do.
+
+For more details, you can have a look [here](./azureServerless/README.md)
